@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#16324f">
+  <title>Download Dozemate</title>
+  <style>
+    :root {
+      --bg: #f4efe4;
+      --panel: rgba(255, 255, 255, 0.82);
+      --text: #16324f;
+      --muted: #4f6478;
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --secondary: #f59e0b;
+      --border: rgba(22, 50, 79, 0.12);
+      --shadow: 0 24px 70px rgba(22, 50, 79, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(13, 148, 136, 0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.22), transparent 30%),
+        linear-gradient(135deg, #f6f1e7 0%, #eef6f8 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .shell {
+      width: min(100%, 460px);
+      position: relative;
+    }
+
+    .shell::before,
+    .shell::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      z-index: 0;
+      filter: blur(10px);
+    }
+
+    .shell::before {
+      width: 120px;
+      height: 120px;
+      top: -28px;
+      right: 18px;
+      background: rgba(13, 148, 136, 0.18);
+    }
+
+    .shell::after {
+      width: 86px;
+      height: 86px;
+      bottom: -10px;
+      left: -12px;
+      background: rgba(245, 158, 11, 0.22);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(14px);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      object-fit: cover;
+      display: block;
+      background: white;
+      box-shadow: 0 12px 24px rgba(13, 148, 136, 0.18);
+      border: 1px solid rgba(22, 50, 79, 0.08);
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 0 22px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(22, 50, 79, 0.08);
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 3px solid rgba(13, 148, 136, 0.18);
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+      flex: 0 0 auto;
+    }
+
+    .status-copy {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .buttons {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .button {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      box-shadow: 0 16px 28px rgba(13, 148, 136, 0.22);
+    }
+
+    .button-secondary {
+      background: rgba(22, 50, 79, 0.08);
+      color: var(--text);
+    }
+
+    .helper {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 26px 20px;
+        border-radius: 24px;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+      }
+
+      .status {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="card">
+      <div class="brand">
+        <img class="logo" src="./assets/dozemate-logo.jpg" alt="Dozemate logo">
+        <div class="brand-copy">
+          <span class="eyebrow">Dozemate App</span>
+          <strong>Smart setup for your device</strong>
+        </div>
+      </div>
+
+      <h1>Download Dozemate</h1>
+      <p id="description">
+        We are preparing the best download option for your device. If nothing happens, use the buttons below.
+      </p>
+
+      <div class="status" id="statusBox" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="status-copy" id="statusText">Checking your device and redirecting...</div>
+      </div>
+
+      <div class="buttons" id="buttonGroup">
+        <a class="button button-primary" id="androidButton" href="https://play.google.com/store/apps/details?id=com.slimiot.dozemate1">
+          Download on Google Play
+        </a>
+        <a class="button button-secondary" id="iosButton" href="https://apps.apple.com/in/app/dozemate/id6759395386">
+          Download on the App Store
+        </a>
+      </div>
+
+      <p class="helper" id="helperText">
+        This QR code works on Android, iPhone, iPad, and desktop browsers.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const ANDROID_URL = "https://play.google.com/store/apps/details?id=com.slimiot.dozemate1";
+    const IOS_URL = "https://apps.apple.com/in/app/dozemate/id6759395386";
+    const REDIRECT_DELAY_MS = 500;
+
+    const ua = navigator.userAgent.toLowerCase();
+    const isAndroid = ua.includes("android");
+    const isIOS = /iphone|ipad|ipod/.test(ua);
+
+    const statusText = document.getElementById("statusText");
+    const description = document.getElementById("description");
+    const helperText = document.getElementById("helperText");
+    const statusBox = document.getElementById("statusBox");
+    const androidButton = document.getElementById("androidButton");
+    const iosButton = document.getElementById("iosButton");
+
+    androidButton.href = ANDROID_URL;
+    iosButton.href = IOS_URL;
+
+    function showFallback(message) {
+      statusText.textContent = message;
+      description.textContent = "Choose your store manually if auto-redirect did not start.";
+      helperText.textContent = "If you are viewing this on a laptop or unsupported browser, pick the correct store below.";
+      statusBox.classList.remove("hidden");
+    }
+
+    function redirectUser() {
+      if (isAndroid) {
+        statusText.textContent = "Android detected. Opening Google Play...";
+        window.location.replace(ANDROID_URL);
+        return;
+      }
+
+      if (isIOS) {
+        statusText.textContent = "iPhone or iPad detected. Opening the App Store...";
+        window.location.replace(IOS_URL);
+        return;
+      }
+
+      showFallback("We could not confirm your device automatically.");
+    }
+
+    setTimeout(redirectUser, REDIRECT_DELAY_MS);
+  </script>
+</body>
+</html>
